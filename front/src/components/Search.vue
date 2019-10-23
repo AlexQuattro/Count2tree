@@ -1,5 +1,4 @@
 <template>
-  <v-app-bar app aspect-ratio="1.7" color="light-green">
     <v-toolbar-title class="mx-5 my-auto">
       <v-layout class="mx-5">
         <v-flex xs10>
@@ -17,48 +16,26 @@
         </v-flex>
       </v-layout>
     </v-toolbar-title>
-  </v-app-bar>
 </template>
 
 <script>
 import axios from "axios";
-import Tree from "/home/coco/PycharmProjects/Count2tree2/front/src/components/Tree";
 
 export default {
-  components: {
-    Tree
-  },
   data: () => ({
     search: "",
-    trees: [],
-    items: [],
-    value: []
+    items: []
   }),
   created() {
     this.searchTree();
   },
   methods: {
     searchTree() {
-      let params = { query: this.search };
-      axios
-        .get("http://localhost:8000/api/v1/trees", { params: params })
-        .then(response => {
-          this.trees = response.data;
-        });
-
-      axios.get("http://localhost:8000/api/v1/locations").then(response => {
-        this.items = response.data;
+      axios.get("http://localhost:8000/api/v1/locations")
+      .then(response => { this.items = response.data;
       });
 
-      axios
-        .get("http://localhost:8000/api/v1/height", { params: params })
-        .then(response => {
-          this.value = response.data;
-        });
-
     this.$emit("search",this.search)
-    console.log("hello")
-    // debugger;
     }
   }
 };
